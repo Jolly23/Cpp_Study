@@ -1,0 +1,113 @@
+#include<windows.h>
+#include"head.h"
+BACK BITMAP resource\BACK.bmp
+BKG BITMAP resource\BKG.bmp
+
+FK_A BITMAP resource\FK_A.bmp
+FK_2 BITMAP resource\FK_2.bmp
+FK_3 BITMAP resource\FK_3.bmp
+FK_4 BITMAP resource\FK_4.bmp
+FK_5 BITMAP resource\FK_5.bmp
+FK_6 BITMAP resource\FK_6.bmp
+FK_7 BITMAP resource\FK_7.bmp
+FK_8 BITMAP resource\FK_8.bmp
+FK_9 BITMAP resource\FK_9.bmp
+FK_10 BITMAP resource\FK_10.bmp
+FK_J BITMAP resource\FK_J.bmp
+FK_Q BITMAP resource\FK_Q.bmp
+FK_K BITMAP resource\FK_K.bmp
+
+MH_A BITMAP resource\MH_A.bmp
+MH_2 BITMAP resource\MH_2.bmp
+MH_3 BITMAP resource\MH_3.bmp
+MH_4 BITMAP resource\MH_4.bmp
+MH_5 BITMAP resource\MH_5.bmp
+MH_6 BITMAP resource\MH_6.bmp
+MH_7 BITMAP resource\MH_7.bmp
+MH_8 BITMAP resource\MH_8.bmp
+MH_9 BITMAP resource\MH_9.bmp
+MH_10 BITMAP resource\MH_10.bmp
+MH_J BITMAP resource\MH_J.bmp
+MH_Q BITMAP resource\MH_Q.bmp
+MH_K BITMAP resource\MH_K.bmp
+
+HX_A BITMAP resource\HX_A.bmp
+HX_2 BITMAP resource\HX_2.bmp
+HX_3 BITMAP resource\HX_3.bmp
+HX_4 BITMAP resource\HX_4.bmp
+HX_5 BITMAP resource\HX_5.bmp
+HX_6 BITMAP resource\HX_6.bmp
+HX_7 BITMAP resource\HX_7.bmp
+HX_8 BITMAP resource\HX_8.bmp
+HX_9 BITMAP resource\HX_9.bmp
+HX_10 BITMAP resource\HX_10.bmp
+HX_J BITMAP resource\HX_J.bmp
+HX_Q BITMAP resource\HX_Q.bmp
+HX_K BITMAP resource\HX_K.bmp
+
+HT_A BITMAP resource\HT_A.bmp
+HT_2 BITMAP resource\HT_2.bmp
+HT_3 BITMAP resource\HT_3.bmp
+HT_4 BITMAP resource\HT_4.bmp
+HT_5 BITMAP resource\HT_5.bmp
+HT_6 BITMAP resource\HT_6.bmp
+HT_7 BITMAP resource\HT_7.bmp
+HT_8 BITMAP resource\HT_8.bmp
+HT_9 BITMAP resource\HT_9.bmp
+HT_10 BITMAP resource\HT_10.bmp
+HT_J BITMAP resource\HT_J.bmp
+HT_Q BITMAP resource\HT_Q.bmp
+HT_K BITMAP resource\HT_K.bmp
+//定义位图资源
+MI ICON resource\MI.ico
+RD ICON resource\record.ico
+Amenu ACCELERATORS
+{
+	"^S",IDM_SAVE
+	"^O",IDM_OPEN
+	VK_F2,IDM_NEW,VIRTKEY
+	VK_F1,IDM_ABOUT,VIRTKEY
+	VK_F5,IDM_RETRY,VIRTKEY
+	68,IDM_D,VIRTKEY
+	85,IDM_U,VIRTKEY
+	77,IDM_M,VIRTKEY
+}
+menu MENU 
+{
+	POPUP"游戏(&G)"
+	{
+		MENUITEM"开局(&N)\tF2",IDM_NEW ;
+		MENUITEM"重新开局(&R)\tF5",IDM_RETRY,GRAYED;
+		MENUITEM SEPARATOR;
+		MENUITEM"撤销(&U)\tU",IDM_U,GRAYED;
+		MENUITEM"发牌(&D)\tD",IDM_D,GRAYED;
+		MENUITEM"提示(&M)\tM",IDM_M,GRAYED;
+		MENUITEM SEPARATOR;
+		MENUITEM"保存本次游戏(&S)\tCtrl+S",IDM_SAVE,GRAYED;
+		MENUITEM"打开保存的游戏(&O)\tCtrl+O",IDM_OPEN;
+		MENUITEM SEPARATOR;
+		MENUITEM"退出(&X)",IDM_EXIT;
+	}
+	MENUITEM"发牌(&D)",IDM_D,GRAYED;
+	POPUP"帮助(&H)"
+	{
+		MENUITEM"关于蜘蛛(&A)   F1",IDM_ABOUT;
+	}
+}
+//定义菜单资源
+YDS DIALOG 250,110,130,100
+STYLE WS_POPUP|WS_CAPTION|DS_FIXEDSYS
+CAPTION "难易级别"
+{
+	LTEXT "请选择难度:",-1,17,5,80,10
+	AUTORADIOBUTTON "初级(&E):单色",IDEY,35,20,130,18
+	AUTORADIOBUTTON"中级(&M):双色",IDMM,35,38,130,18
+	AUTORADIOBUTTON "高级(&D):四色",IDDT,35,56,130,18
+	PUSHBUTTON "确定",IDOK,45,80,50,15
+	ICON "MI",-1,0,0,15,15
+}
+
+
+
+
+

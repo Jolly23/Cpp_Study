@@ -1,0 +1,19 @@
+// In.cpp: implementation of the CIn class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+#include "In.h"
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+CInput& CInput::operator>>(int &i)
+{
+	
+}
+CInput& CInput::operator>>(int &i);
+CInput& CInput::operator>>(char str[]);
+CInput& CInput::operator>>(short &i);
+CInput& CInput::operator>>(char &i);

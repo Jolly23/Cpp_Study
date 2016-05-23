@@ -1,0 +1,30 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: ListEx - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\Jolly\LOCALS~1\Temp\RSP5.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "_AFXDLL" /FR"Debug/" /Fp"Debug/ListEx.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\ÀÚµÄ×÷Æ·\VC6.0 WORKSPACE\LISTEX\ListEx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Jolly\LOCALS~1\Temp\RSP5.tmp" 
+Creating command line "link.exe /nologo /subsystem:console /incremental:yes /pdb:"Debug/ListEx.pdb" /debug /machine:I386 /out:"Debug/ListEx.exe" /pdbtype:sept  ".\Debug\ListEx.obj" ".\Debug\ListEx1.obj" ".\Debug\StdAfx.obj" "
+<h3>Output Window</h3>
+Compiling...
+ListEx.cpp
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/ListEx.bsc"  ".\Debug\StdAfx.sbr" ".\Debug\ListEx.sbr" ".\Debug\ListEx1.sbr""
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+ListEx.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,12 @@
+#define IDM_RETRY 11
+#define IDM_U 12
+#define IDM_D 13
+#define IDM_M 14
+#define IDM_SAVE  15
+#define IDM_OPEN  16
+#define IDM_EXIT  17
+#define IDM_ABOUT  18
+#define IDEY       50
+#define IDMM       51
+#define IDDT       52
+#define IDM_NEW 10

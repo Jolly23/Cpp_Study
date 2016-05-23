@@ -1,0 +1,586 @@
+#include<windows.h>
+#include<stdio.h>
+#include<string.h>
+#include<time.h>
+#include"head.h"
+#include"Init.h"
+int WINAPI WinMain(HINSTANCE hinstance,HINSTANCE hpr,LPSTR Lp,int cmd)
+{
+	MSG msg;
+	if(!InitWndClass(hinstance))
+	{
+		MessageBeep(0);
+		return FALSE;
+	}
+	InitFuction(hinstance);
+	if(!InitWindow(hinstance,cmd))
+		return FALSE;
+	while(GetMessage(&msg,NULL,0,0))
+	{
+		if(!TranslateAccelerator(hwnd,hac,&msg))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	}
+	return msg.wParam;
+}
+LRESULT CALLBACK WndProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam)
+{
+	int i,j,k,m,t;
+	int x1,x2;
+	HDC hdc;
+	PAINTSTRUCT ps;
+	char *txt1="操作:",txt2[10];
+	FILE *fp;
+	SIZE size;
+	switch(msg)
+	{
+	case WM_CREATE:
+		hdc=GetDC(hwnd);
+		hdcmem=CreateCompatibleDC(hdc);
+		hdcm=CreateCompatibleDC(hdc);
+		ReleaseDC(hwnd,hdc);
+		return 0;
+	case WM_PAINT:
+		hdc=BeginPaint(hwnd,&ps);
+		Hbm=CreateCompatibleBitmap(hdc,2000,2000);
+		SelectObject(hdcm,Hbm);
+		SelectObject(hdcm,hp1);
+		SelectObject(hdcm,hbr1);
+		Rectangle(hdcm,0,0,2000,2000);
+		SelectObject(hdcmem,bkg.hbm);
+		for(i=0;i<10;i++)
+		{
+			if(MTFlag==2&&i==PT.y)
+				BitBlt(hdcm,pt[i].x,pt[i].y,bkg.bm.bmWidth,bkg.bm.bmHeight,hdcmem,0,0,NOTSRCCOPY);
+			else
+				BitBlt(hdcm,pt[i].x,pt[i].y,bkg.bm.bmWidth,bkg.bm.bmHeight,hdcmem,0,0,SRCCOPY);
+		}
+		SelectObject(hdcm,hp2);
+		SelectObject(hdcm,hbr2);
+		Rectangle(hdcm,552,590,752,660);
+		if(DFlag)
+		{
+			for(i=Df+1;i<10;i++)
+				if(Dnum=GameWin(i))
+				{
+					Df=i;
+					break;
+				}
+			if(i==10)
+				Df=-1;
+			DFlag=0;
+		}
+		for(i=0;i<WFlag;i++)
+		{
+			k=Win[i].x;
+			SelectObject(hdcmem,bmp[k][13].hbm);
+			BitBlt(hdcm,pt[0].x+14*i,580,bmp[k][13].bm.bmWidth,bmp[k][13].bm.bmHeight,hdcmem,0,0,SRCCOPY);
+		}
+		if(Dnum>0)
+		{
+			k=Win[WFlag].x;
+			SelectObject(hdcmem,bmp[k][14-Dnum].hbm);
+			BitBlt(hdcm,pt[0].x+WFlag*14,580,bmp[k][14-Dnum].bm.bmWidth,bmp[k][14-Dnum].bm.bmHeight,hdcmem,0,0,SRCCOPY);
+			i=Win[WFlag].k;
+			PS[NUM].num[i]--;
+			j=PS[NUM].num[i];
+			PS[NUM].pk[i][j].F=0;
+			Dnum--;
+			if(Dnum==0)
+			{
+				if(j)
+					PS[NUM].pk[i][j-1].flag=1;
+				if(Df>=0&&Df<9)
+					DFlag=1;
+				if(NUM)
+				{
+					PS[0]=PS[NUM];
+					NUM=0;
+				}
+				EnableMenuItem(hmenu,IDM_U,MF_BYCOMMAND|MF_GRAYED);
+				SetMenu(hwnd,hmenu);
+				WFlag++;
+			}
+			Sleep(100);
+			InvalidateRect(hwnd,NULL,0);
+		}
+		if(LFlag)
+		{
+			SelectObject(hdcm,hf);
+			sprintf(txt2,"%d",Time);
+		    GetTextExtentPoint32(hdcm,txt1,strlen(txt1),&size);
+			SetTextColor(hdcm,RGB(255,255,255));
+			SetBkMode(hdcm,TRANSPARENT);
+			TextOut(hdcm,600,610,txt1,strlen(txt1));
+			TextOut(hdcm,600+size.cx,610,txt2,strlen(txt2));
+			for(i=0;i<10;i++)
+				for(j=0;j<PS[NUM].num[i];j++)
+				{
+					if(PS[NUM].pk[i][j].flag==0)
+					{
+						SelectObject(hdcmem,bmk.hbm);
+						BitBlt(hdcm,PS[NUM].Pt[i][j].x,PS[NUM].Pt[i][j].y,bmk.bm.bmWidth,bmk.bm.bmHeight,hdcmem,0,0,SRCCOPY);
+					}
+					else
+					{
+						x1=PS[NUM].pk[i][j].x;
+						x2=PS[NUM].pk[i][j].y;
+						SelectObject(hdcmem,bmp[x1][x2].hbm);
+						if(MTFlag==1&&i==PT.x&&j>=PT.k)
+							BitBlt(hdcm,PS[NUM].Pt[i][j].x,PS[NUM].Pt[i][j].y,bmp[x1][x2].bm.bmWidth,bmp[x1][x2].bm.bmHeight,hdcmem,0,0,NOTSRCCOPY);
+						else if(MTFlag==2&&i==PT.y&&j==PS[NUM].num[i]-1)
+							BitBlt(hdcm,PS[NUM].Pt[i][j].x,PS[NUM].Pt[i][j].y,bmp[x1][x2].bm.bmWidth,bmp[x1][x2].bm.bmHeight,hdcmem,0,0,NOTSRCCOPY);
+						else
+							BitBlt(hdcm,PS[NUM].Pt[i][j].x,PS[NUM].Pt[i][j].y,bmp[x1][x2].bm.bmWidth,bmp[x1][x2].bm.bmHeight,hdcmem,0,0,SRCCOPY);				
+					}
+				}
+			for(i=0;i<PS[NUM].T;i++)
+			{
+				SelectObject(hdcmem,bmk.hbm);
+				BitBlt(hdcm,pt[9].x-14*i,580,bmk.bm.bmWidth,bmk.bm.bmHeight,hdcmem,0,0,SRCCOPY);
+			}
+		}
+		if(MFlag)
+		{
+			x1=PS[NUM].pk[MP.X][MP.Y].x;
+			x2=PS[NUM].pk[MP.X][MP.Y].y;
+			for(i=0;i<MP.Num;i++)
+			{
+				SelectObject(hdcmem,bmp[x1][x2-i].hbm);
+				BitBlt(hdcm,MP.pm.x,MP.pm.y+i*25,bmp[x1][x2-i].bm.bmWidth,bmp[x1][x2-i].bm.bmHeight,hdcmem,0,0,SRCCOPY);
+			}
+		}
+		BitBlt(hdc,0,0,2000,2000,hdcm,0,0,SRCCOPY);
+		if(WFlag==8&&LFlag)
+		{
+			LFlag=0;
+			if(IDYES==MessageBox(hwnd,"你赢了,是否开始新游戏?","蜘蛛",MB_YESNO|MB_ICONQUESTION))
+			{
+				DialogBox(hist,"YDS",hwnd,(DLGPROC)DlgProc);
+				InitPoker();
+				GetPoker();
+			}
+			else
+			{
+				WFlag=0;
+				BFlag=0;
+				EnableMenuItem(hmenu,1,MF_BYPOSITION|MF_GRAYED);
+				EnableMenuItem(hmenu,IDM_RETRY,MF_BYCOMMAND|MF_GRAYED);
+				EnableMenuItem(hmenu,IDM_D,MF_BYCOMMAND|MF_GRAYED);
+				EnableMenuItem(hmenu,IDM_M,MF_BYCOMMAND|MF_GRAYED);
+				EnableMenuItem(hmenu,IDM_SAVE,MF_BYCOMMAND|MF_GRAYED);
+				SetMenu(hwnd,hmenu);
+			}
+			InvalidateRect(hwnd,NULL,0);
+		}
+		switch(MTFlag)
+		{
+		case 1:
+			MTFlag=2;
+			Sleep(500);
+			InvalidateRect(hwnd,NULL,0);
+			break;
+		case 2:
+			MTFlag=0;
+			Sleep(500);
+			InvalidateRect(hwnd,NULL,0);
+			break;
+		}
+		EndPaint(hwnd,&ps);
+		return 0;
+	case WM_LBUTTONDOWN:
+		x1=LOWORD(lparam);
+		x2=HIWORD(lparam);
+		if(LFlag)
+		{
+			if(PS[NUM].T!=0&&x1>=pt[9].x-14*(PS[NUM].T-1)&&x1<=pt[9].x+71&&x2>=580&&x2<=676)
+			{
+				for(i=0;i<10;i++)
+					if(PS[NUM].num[i]==0)
+					{
+						MessageBox(hwnd,"有空位时不能发牌","蜘蛛",MB_ICONWARNING|MB_OK);
+						break;
+					}
+				if(i==10)
+				{
+					for(i=0;i<10;i++)
+					{
+						j=PS[NUM].num[i];
+						PS[NUM].pk[i][j]=PS[NUM].pr[i][5-PS[NUM].T];
+						PS[NUM].Pt[i][j].x=PS[NUM].Pt[i][j-1].x;
+						PS[NUM].Pt[i][j].y=PS[NUM].Pt[i][j-1].y+25;
+						PS[NUM].pk[i][j].F=1;
+						PS[NUM].pk[i][j].flag=1;
+						PS[NUM].num[i]++;
+					}
+					PS[NUM].T--;
+					PT.x=0;
+                    PT.y=-1;
+					if(NUM)
+					{
+						PS[0]=PS[NUM];
+						NUM=0;
+					}
+					BFlag=1;
+					DFlag=1;
+					Df=-1;
+					EnableMenuItem(hmenu,IDM_U,MF_BYCOMMAND|MF_GRAYED);
+				    SetMenu(hwnd,hmenu);
+					InvalidateRect(hwnd,NULL,0);
+				}
+			}
+			else
+			{
+				for(i=0;i<10;i++)
+					if(x1>pt[i].x&&x1<pt[i].x+71)
+						break;
+				if(i!=10)
+				{
+					MP.X=i;
+					for(j=0;PS[NUM].pk[i][j].F==1&&PS[NUM].pk[i][j].flag==0;j++)
+					{}
+					for(;j<PS[NUM].num[i];j++)
+					{
+						if(j!=PS[NUM].num[i]-1)
+						{
+							if(x2>PS[NUM].Pt[i][j].y&&x2<PS[NUM].Pt[i][j].y+25)
+								break;
+						}
+						else
+							if(x2>PS[NUM].Pt[i][j].y&&x2<PS[NUM].Pt[i][j].y+96)
+								break;
+					}
+					if(j<PS[NUM].num[i])
+					{
+						MFlag=1;
+						MP.Y=j;
+						MP.sx=x1-PS[NUM].Pt[i][j].x;
+						MP.sy=x2-PS[NUM].Pt[i][j].y;
+						MP.Num=1;
+						while(j+MP.Num<PS[NUM].num[i])
+						{
+							if(PS[NUM].pk[i][j+MP.Num].x!=PS[NUM].pk[i][j+MP.Num-1].x||PS[NUM].pk[i][j+MP.Num].y!=PS[NUM].pk[i][j+MP.Num-1].y-1)
+							{
+								MFlag=0;
+								break;
+							}
+							MP.Num++;
+						}
+						if(MFlag)
+						{
+							if(NUM==49)
+							{
+								for(k=0;k<49;k++)
+									PS[k]=PS[k+1];
+								NUM--;
+							}
+							PS[NUM+1]=PS[NUM];
+							NUM++;
+							while(j<PS[NUM].num[i])
+							{
+								PS[NUM].pk[i][j].F=0;
+								j++;
+							}
+							PS[NUM].num[i]-=MP.Num;
+						}
+					}
+				}
+			}
+		}
+		return 0;
+	case WM_MOUSEMOVE:
+		x1=LOWORD(lparam);
+		x2=HIWORD(lparam);
+		if(MFlag)
+		{
+			MP.pm.x=x1-MP.sx;
+			MP.pm.y=x2-MP.sy;
+			InvalidateRect(hwnd,NULL,0);
+		}
+		return 0;
+	case WM_LBUTTONUP:
+		x1=LOWORD(lparam);
+		x2=HIWORD(lparam);
+		if(MFlag)
+		{
+			i=MP.X;
+			j=MP.Y;
+			for(k=0;k<10;k++)
+			{
+				if(k!=i)
+				{
+					m=PS[NUM].num[k];
+					if(MP.pm.x>pt[k].x&&MP.pm.x<pt[k].x+71)
+					{
+						if(m==0)
+						{
+							if(MP.pm.y>pt[k].y&&MP.pm.y<pt[k].y+96)
+								break;
+						}
+						else
+							if(MP.pm.y>PS[NUM].Pt[k][m-1].y&&MP.pm.y<PS[NUM].Pt[k][m-1].y+96)
+								break;
+					}
+				}
+			}
+			if(k!=10)
+			{
+				if(m+MP.Num>24)
+				{
+					MessageBox(hwnd,"一列不能超过限定的牌数!","蜘蛛",MB_ICONWARNING|MB_OK);
+					NUM--;
+				}
+				else if(m==0||PS[NUM].pk[i][j].y+1==PS[NUM].pk[k][m-1].y)
+				{
+					if(j!=0)
+						PS[NUM].pk[i][j-1].flag=1;
+					t=0;
+					while(t<MP.Num)
+					{
+						PS[NUM].pk[k][m+t].F=1;
+						PS[NUM].pk[k][m+t].x=PS[NUM].pk[i][j].x;
+						PS[NUM].pk[k][m+t].y=PS[NUM].pk[i][j+t].y;
+						PS[NUM].pk[k][m+t].flag=1;
+						PS[NUM].Pt[k][m+t].x=pt[k].x;
+						if(m+t==0)
+							PS[NUM].Pt[k][m+t].y=pt[k].y;
+						else
+							PS[NUM].Pt[k][m+t].y=PS[NUM].Pt[k][m+t-1].y+25;
+						PS[NUM].num[k]++;
+						t++;
+					}
+					PT.x=0;
+                    PT.y=-1;
+					Time++;
+					Dnum=GameWin(k);
+					BFlag=1;
+					EnableMenuItem(hmenu,IDM_U,MF_BYCOMMAND|MF_ENABLED);
+				    SetMenu(hwnd,hmenu);
+				}
+				else
+					NUM--;
+			}
+			else
+				NUM--;
+			MFlag=0;
+			InvalidateRect(hwnd,NULL,0);
+		}
+		return 0;
+	case WM_COMMAND:
+		switch(LOWORD(wparam))
+		{
+		case IDM_NEW:
+			if(BFlag&&IDNO==MessageBox(hwnd,"是否开始新游戏?","蜘蛛",MB_ICONQUESTION|MB_YESNO))
+				YFlag=0;
+			if(YFlag)
+			{
+				LFlag=0;
+			    DialogBox(hist,"YDS",hwnd,(DLGPROC)DlgProc);
+				InitPoker();
+				GetPoker();
+				EnableMenuItem(hmenu,1,MF_BYPOSITION|MF_ENABLED);
+				EnableMenuItem(hmenu,IDM_RETRY,MF_BYCOMMAND|MF_ENABLED);
+				EnableMenuItem(hmenu,IDM_D,MF_BYCOMMAND|MF_ENABLED);
+				EnableMenuItem(hmenu,IDM_M,MF_BYCOMMAND|MF_ENABLED);
+				EnableMenuItem(hmenu,IDM_SAVE,MF_BYCOMMAND|MF_ENABLED);
+				SetMenu(hwnd,hmenu);
+				InvalidateRect(hwnd,NULL,0);
+			}
+			YFlag=1;
+			break;
+		case IDM_RETRY:
+			if(BFlag&&IDNO==MessageBox(hwnd,"是否重新开始本次游戏?","蜘蛛",MB_ICONQUESTION|MB_YESNO))
+				YFlag=0;
+			if(YFlag)
+			{
+				GetPoker();
+				EnableMenuItem(hmenu,IDM_U,MF_BYCOMMAND|MF_GRAYED);
+				SetMenu(hwnd,hmenu);
+				InvalidateRect(hwnd,NULL,0);
+			}
+			YFlag=1;
+			break;
+		case IDM_D:
+			if(PS[NUM].T)
+			{
+				for(i=0;i<10;i++)
+					if(PS[NUM].num[i]==0)
+					{
+						MessageBox(hwnd,"有空位时不能发牌","蜘蛛",MB_ICONWARNING|MB_OK);
+						break;
+					}
+				if(i==10)
+				{
+					for(i=0;i<10;i++)
+					{
+						j=PS[NUM].num[i];
+						PS[NUM].pk[i][j]=PS[NUM].pr[i][5-PS[NUM].T];
+						PS[NUM].Pt[i][j].x=PS[NUM].Pt[i][j-1].x;
+						PS[NUM].Pt[i][j].y=PS[NUM].Pt[i][j-1].y+25;
+						PS[NUM].pk[i][j].F=1;
+						PS[NUM].pk[i][j].flag=1;
+						PS[NUM].num[i]++;
+					}
+					PS[NUM].T--;
+					PT.x=0;
+                    PT.y=-1;
+					if(NUM)
+					{
+						PS[0]=PS[NUM];
+						NUM=0;
+					}
+					BFlag=1;
+					DFlag=1;
+					Df=-1;
+					EnableMenuItem(hmenu,IDM_U,MF_BYCOMMAND|MF_GRAYED);
+				    SetMenu(hwnd,hmenu);
+					InvalidateRect(hwnd,NULL,0);
+				}
+			}
+			else
+				MessageBox(hwnd,"牌已发完","蜘蛛",MB_ICONWARNING|MB_OK);
+			break;
+		case IDM_U:
+			NUM--;
+			Time++;
+			if(NUM==0)
+			{
+				EnableMenuItem(hmenu,IDM_U,MF_BYCOMMAND|MF_GRAYED);
+				SetMenu(hwnd,hmenu);
+			}
+			InvalidateRect(hwnd,NULL,0);
+			break;
+		case IDM_M:
+			for(i=PT.x;i<10;i++)
+			{
+				k=PS[NUM].num[i]-1;
+				if(k==-1)
+					continue;
+				while(k>0&&PS[NUM].pk[i][k].flag==1&&PS[NUM].pk[i][k].x==PS[NUM].pk[i][k-1].x&&PS[NUM].pk[i][k].y+1==PS[NUM].pk[i][k-1].y)
+					k--;
+				for(j=PT.y+1;j<10;j++)
+				{
+					t=PS[NUM].num[j];
+					if(t==0||PS[NUM].pk[i][k].y+1==PS[NUM].pk[j][t-1].y)
+						break;
+				}
+				if(j==10)
+					PT.y=-1;
+				else
+					break;
+			}
+			if(i==10)
+			{
+				MessageBox(hwnd,"无可操作的牌!","蜘蛛",MB_ICONWARNING|MB_OK);
+				PT.x=0;
+				PT.y=-1;
+			}
+			else
+			{
+				PT.x=i;
+				PT.y=j;
+				PT.k=k;
+				MTFlag=1;
+				InvalidateRect(hwnd,NULL,0);
+			}
+			break;
+		case IDM_SAVE:
+			fp=fopen("save","wb");
+			fwrite(pk1,sizeof(Poker),110,fp); 
+			fwrite(PS+NUM,sizeof(PokerState),1,fp); 
+			fwrite(Win,sizeof(Win),1,fp); 
+			fwrite(&WFlag,sizeof(int),1,fp); 
+			fwrite(&LFlag,sizeof(int),1,fp); 
+			fwrite(&Time,sizeof(int),1,fp); 
+			fclose(fp);
+			break;
+		case IDM_OPEN:
+			fp=fopen("save","rb");
+			if(fp==NULL)
+				MessageBox(hwnd,"没有存档","蜘蛛",MB_ICONWARNING|MB_OK);
+			else
+			{
+				if(BFlag&&IDNO==MessageBox(hwnd,"是否放弃本次游戏?","蜘蛛",MB_ICONQUESTION|MB_YESNO))
+					YFlag=0;
+				if(YFlag)
+				{
+					fread(pk1,sizeof(Poker),110,fp); 
+					fread(PS,sizeof(PokerState),1,fp); 
+					fread(Win,sizeof(Win),1,fp); 
+					fread(&WFlag,sizeof(int),1,fp); 
+					fread(&LFlag,sizeof(int),1,fp); 
+					fread(&Time,sizeof(int),1,fp); 
+					BFlag=0;
+					MTFlag=0;
+					Dnum=0;
+					NUM=0;
+					PT.x=0;
+					PT.y=-1;
+					EnableMenuItem(hmenu,1,MF_BYPOSITION|MF_ENABLED);
+					EnableMenuItem(hmenu,IDM_RETRY,MF_BYCOMMAND|MF_ENABLED);
+					EnableMenuItem(hmenu,IDM_D,MF_BYCOMMAND|MF_ENABLED);
+					EnableMenuItem(hmenu,IDM_M,MF_BYCOMMAND|MF_ENABLED);
+					EnableMenuItem(hmenu,IDM_SAVE,MF_BYCOMMAND|MF_ENABLED);
+					SetMenu(hwnd,hmenu);
+					InvalidateRect(hwnd,NULL,0);
+				}
+				YFlag=1;
+				fclose(fp);
+			}
+			break;
+		case IDM_ABOUT:
+			MessageBox(hwnd,"  哥的出品  \n\n  就是精品  ","秋虫虫",MB_OK);
+			break;
+		case IDM_EXIT:
+			SendMessage(hwnd,WM_DESTROY,0,0);
+			break;
+		}
+		return 0;
+	case WM_CLOSE:
+		SendMessage(hwnd,WM_DESTROY,0,0);
+		return 0;
+	case WM_DESTROY:
+		if(IDOK==MessageBox(hwnd,"确定退出?","蜘蛛",MB_ICONQUESTION|MB_OKCANCEL))
+		{
+			DeleteObject(hp1);
+			DeleteObject(hbr1);
+			DeleteObject(hp2);
+			DeleteObject(hbr2);
+			DeleteDC(hdcmem);
+			DeleteDC(hdcm);
+			PostQuitMessage(0);
+		}
+		return 0;
+	default:
+		return DefWindowProc(hwnd,msg,wparam,lparam);
+	}
+}
+BOOL CALLBACK DlgProc(HWND hdlg,UINT msg,WPARAM wparam,LPARAM lparam)
+{
+	switch(msg)
+	{
+	case WM_INITDIALOG:
+		return 1;
+	case WM_COMMAND:
+		switch(LOWORD(wparam))
+		{
+		case IDOK:
+			if(LFlag)
+				EndDialog(hdlg,0);
+			break;
+		case IDEY:
+			LFlag=1;
+			break;
+		case IDMM:
+			LFlag=2;
+			break;
+		case IDDT:
+			LFlag=4;
+			break;
+		}
+		return 1;
+	}
+	return 0;
+}

@@ -1,0 +1,29 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Server多线程服务器M ulti_Thread - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\Jolly\LOCALS~1\Temp\RSP60.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "_AFXDLL" /Fp"Debug/Server多线程服务器M ulti_Thread.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\LEI_WORKSTATION\VC6.0 WORKSPACE\SERVER多线程服务器MULTI_THREAD\Server多线程服务器M ulti_Thread.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Jolly\LOCALS~1\Temp\RSP60.tmp" 
+Creating command line "link.exe /nologo /subsystem:console /incremental:yes /pdb:"Debug/Server多线程服务器M ulti_Thread.pdb" /debug /machine:I386 /out:"Debug/Server多线程服务器M ulti_Thread.exe" /pdbtype:sept  ".\Debug\Server多线程服务器M ulti_Thread.obj" ".\Debug\StdAfx.obj" "
+<h3>Output Window</h3>
+Compiling...
+Server多线程服务器M ulti_Thread.cpp
+E:\LEI_WORKSTATION\VC6.0 WORKSPACE\SERVER多线程服务器MULTI_THREAD\Server多线程服务器M ulti_Thread.cpp(37) : warning C4101: 's' : unreferenced local variable
+E:\LEI_WORKSTATION\VC6.0 WORKSPACE\SERVER多线程服务器MULTI_THREAD\Server多线程服务器M ulti_Thread.cpp(51) : warning C4508: 'PrintAddr' : function should return a value; 'void' return type assumed
+Linking...
+
+
+
+<h3>Results</h3>
+Server多线程服务器M ulti_Thread.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

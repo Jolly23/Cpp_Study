@@ -1,0 +1,44 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Drcom密码提取 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\Jolly\LOCALS~1\Temp\RSPB2.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/Drcom密码提取.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\JOLLYWORKSPACE\VC6.0 WORKSPACE\DRCOM密码提取\Drcom密码提取.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Jolly\LOCALS~1\Temp\RSPB2.tmp" 
+Creating temporary file "C:\DOCUME~1\Jolly\LOCALS~1\Temp\RSPB3.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/Drcom密码提取.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\JOLLYWORKSPACE\VC6.0 WORKSPACE\DRCOM密码提取\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Jolly\LOCALS~1\Temp\RSPB3.tmp" 
+Creating temporary file "C:\DOCUME~1\Jolly\LOCALS~1\Temp\RSPB4.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/Drcom密码提取.pdb" /debug /machine:I386 /out:"Debug/Drcom密码提取.exe" /pdbtype:sept 
+".\Debug\Drcom密码提取.obj"
+".\Debug\StdAfx.obj"
+]
+Creating command line "link.exe @C:\DOCUME~1\Jolly\LOCALS~1\Temp\RSPB4.tmp"
+<h3>Output Window</h3>
+Compiling...
+StdAfx.cpp
+Compiling...
+Drcom密码提取.cpp
+E:\JOLLYWORKSPACE\VC6.0 WORKSPACE\DRCOM密码提取\Drcom密码提取.cpp(79) : error C2065: 'sprintf_s' : undeclared identifier
+E:\JOLLYWORKSPACE\VC6.0 WORKSPACE\DRCOM密码提取\Drcom密码提取.cpp(100) : error C2065: 'fscanf_s' : undeclared identifier
+E:\JOLLYWORKSPACE\VC6.0 WORKSPACE\DRCOM密码提取\Drcom密码提取.cpp(116) : warning C4508: 'main' : function should return a value; 'void' return type assumed
+执行 cl.exe 时出错.
+
+
+
+<h3>Results</h3>
+Drcom密码提取.exe - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

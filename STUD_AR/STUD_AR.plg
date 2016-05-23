@@ -1,0 +1,27 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: STUD_AR - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\Jolly\LOCALS~1\Temp\RSPAD.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "_AFXDLL" /Fp"Debug/STUD_AR.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\ÀÚµÄ×÷Æ·\VC6.0 WORKSPACE\STUD_AR\Student.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Jolly\LOCALS~1\Temp\RSPAD.tmp" 
+Creating command line "link.exe /nologo /subsystem:console /incremental:yes /pdb:"Debug/STUD_AR.pdb" /debug /machine:I386 /out:"Debug/STUD_AR.exe" /pdbtype:sept  ".\Debug\StdAfx.obj" ".\Debug\STUD_AR.obj" ".\Debug\Student.obj" "
+<h3>Output Window</h3>
+Compiling...
+Student.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+STUD_AR.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
